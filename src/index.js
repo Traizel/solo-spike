@@ -26,7 +26,7 @@ function* rootSaga() {
     yield takeEvery('CHANGE', change);
 }
 
-const change = (state = [], action) => {
+const changeReducer = (state = [], action) => {
    if (action.type === 'SET_FAVS') {
         return action.payload;
     }
@@ -36,7 +36,7 @@ const change = (state = [], action) => {
 const storeInstance = createStore(
     combineReducers(
         {
-            change
+            changeReducer
         }
     ),
     // Tell redux that we want to use our new logger
