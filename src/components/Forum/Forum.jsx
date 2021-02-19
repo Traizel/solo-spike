@@ -3,7 +3,7 @@ function Forum() {
 
     return (
         <div >
-            <h1>hi</h1>
+            <h1>Forums</h1>
         </div>
     );
 }
