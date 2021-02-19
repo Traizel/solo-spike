@@ -1,17 +1,48 @@
 import React from 'react';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './components/App/App';
+import { Provider } from 'react-redux';
+import logger from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import { takeEvery, put } from 'redux-saga/effects';
+import axios from 'axios';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+
+function* change(action) {
+    try {
+        // action.payload: { searchQ }
+        const searchResponse = yield axios.post('/api/search', action.payload);
+        yield put({ type: 'FETCH_GIFS', payload: searchResponse});
+    } catch (error) {
+        console.log(`Error fetching books`, error);
+    }
+}
+
+// Create sagaMiddleware
+const sagaMiddleware = createSagaMiddleware();
+
+function* rootSaga() {
+    yield takeEvery('CHANGE', change);
+}
+
+const change = (state = [], action) => {
+   if (action.type === 'SET_FAVS') {
+        return action.payload;
+    }
+    return state;
+};
+
+const storeInstance = createStore(
+    combineReducers(
+        {
+            change
+        }
+    ),
+    // Tell redux that we want to use our new logger
+    applyMiddleware(sagaMiddleware, logger),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+sagaMiddleware.run(rootSaga);
+
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
