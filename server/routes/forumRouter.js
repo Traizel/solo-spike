@@ -5,10 +5,12 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   // return all categories
-  const queryText = `SELECT * FROM category ORDER BY name ASC`;
+  console.log('Getting Categories..');
+  const query = `SELECT * FROM forum_category`;
   pool
-    .query(queryText)
+    .query(query)
     .then((result) => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {

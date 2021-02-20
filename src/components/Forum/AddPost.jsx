@@ -1,5 +1,5 @@
 
-function AddForum() {
+function AddPost() {
 
     return (
         <div >
@@ -8,4 +8,4 @@ function AddForum() {
     );
 }
 
-export default AddForum;
+export default AddPost;

@@ -1,5 +1,5 @@
 
-function Forum() {
+function ForumPost() {
 
     return (
         <div >
@@ -8,4 +8,4 @@ function Forum() {
     );
 }
 
-export default Forum;
+export default ForumPost;

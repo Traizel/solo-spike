@@ -1,5 +1,5 @@
 import React from 'react';
-import Forum from '../Forum/Forum';
+import Forum from '../Forum/ForumCategories';
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
