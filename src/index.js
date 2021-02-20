@@ -12,9 +12,18 @@ import axios from 'axios';
 function* fetchForumCategories() {
     try {
         const categoriesResponse = yield axios.get('/api/forum');
-        yield put({ type: 'SET_CATEGORIES', payload: categoriesResponse});
+        yield put({ type: 'SET_CATEGORIES', payload: categoriesResponse.data});
     } catch (error) {
         console.log(`Error fetching categories`, error);
+    }
+}
+
+function* fetchUsers() {
+    try {
+        const usersResponse = yield axios.get('/api/users');
+        yield put({ type: 'SET_USERS', payload: usersResponse.data});
+    } catch (error) {
+        console.log(`Error fetching users`, error);
     }
 }
 
@@ -23,6 +32,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
     yield takeEvery('FETCH_CATEGORIES', fetchForumCategories);
+    yield takeEvery('FETCH_USERS', fetchUsers);
 }
 
 const ForumCategoriesReducer = (state = [], action) => {
@@ -32,10 +42,18 @@ const ForumCategoriesReducer = (state = [], action) => {
     return state;
 };
 
+const GetUsersReducer = (state = [], action) => {
+   if (action.type === 'SET_USERS') {
+        return action.payload;
+    }
+    return state;
+};
+
 const storeInstance = createStore(
     combineReducers(
         {
             ForumCategoriesReducer,
+            GetUsersReducer,
         }
     ),
     // Tell redux that we want to use our new logger

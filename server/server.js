@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 // Route includes
 const forumRouter = require('./routes/forumRouter');
+const userRouter = require('./routes/userRouter');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.use(express.static('build'));
 
 // Routes
 app.use('/api/forum', forumRouter);
+app.use('/api/users', userRouter);
 
 // Listen
 app.listen(PORT, () => {
