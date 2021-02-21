@@ -1,27 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import PostItem from './PostItem';
+import Comments from '../Comments/Comments';
 
 function Post() {
 
-    const currentThread = useSelector(store => store.CurrentCategoryReducer);
-    const posts = useSelector(store => store.ForumPostsReducer);
-    console.log(currentThread);
-    console.log(posts);
+    const users = useSelector(store => store.GetUsersReducer)
+    console.log(users);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_POSTS', payload: currentThread });
+        dispatch({ type: 'FETCH_USERS' })
     }, [])
 
     return (
-        <div >
+        <div>
             <h1>TraizelCraft Forums</h1>
-            <div>
-                {posts.map(post =>
-                    (<PostItem post={post} key={post.id} />)
-                )}
-            </div>
+            <Comments />
         </div>
     );
 }

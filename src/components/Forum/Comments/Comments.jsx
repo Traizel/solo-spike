@@ -4,14 +4,14 @@ import { useEffect } from 'react';
 
 function ForumPostItem() {
 
-    const currentPost = useSelector(store => store.CurrentCategoryReducer);
-    console.log(currentPost);
-    const comments = useSelector(store => store.CurrentCategoryReducer);
+    const currentThread = useSelector(store => store.CurrentThreadReducer);
+    console.log(currentThread);
+    const comments = useSelector(store => store.ForumCommentsReducer);
     console.log(comments);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_COMMENTS', payload: currentPost });
+        dispatch({ type: 'FETCH_COMMENTS', payload: currentThread });
     }, [])
 
     return (

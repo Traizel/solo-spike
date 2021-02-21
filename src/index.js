@@ -37,16 +37,6 @@ function* fetchThreads(action) {
     }
 }
 
-function* fetchPosts(action) {
-    try {
-        console.log(action.payload);
-        const postsResponse = yield axios.post('/api/posts', {id: action.payload});
-        yield put({ type: 'SET_POSTS', payload: postsResponse.data});
-    } catch (error) {
-        console.log(`Error fetching posts`, error);
-    }
-}
-
 function* fetchComments(action) {
     try {
         console.log(action.payload);
@@ -64,7 +54,6 @@ function* rootSaga() {
     yield takeEvery('FETCH_CATEGORIES', fetchForumCategories);
     yield takeEvery('FETCH_USERS', fetchUsers);
     yield takeEvery('FETCH_THREADS', fetchThreads);
-    yield takeEvery('FETCH_POSTS', fetchPosts);
     yield takeEvery('FETCH_COMMENTS', fetchComments);
 }
 
@@ -84,13 +73,6 @@ const ForumThreadsReducer = (state = [], action) => {
 
 const GetUsersReducer = (state = [], action) => {
    if (action.type === 'SET_USERS') {
-        return action.payload;
-    }
-    return state;
-};
-
-const ForumPostsReducer = (state = [], action) => {
-   if (action.type === 'SET_POSTS') {
         return action.payload;
     }
     return state;
@@ -117,13 +99,6 @@ const CurrentThreadReducer = (state = 0, action) => {
     return state;
 };
 
-const CurrentPostReducer = (state = 0, action) => {
-   if (action.type === 'SET_CURRENT_POST') {
-        return action.payload;
-    }
-    return state;
-};
-
 const storeInstance = createStore(
     combineReducers(
         {
@@ -132,8 +107,6 @@ const storeInstance = createStore(
             CurrentCategoryReducer,
             ForumThreadsReducer,
             CurrentThreadReducer,
-            ForumPostsReducer,
-            CurrentPostReducer,
             ForumCommentsReducer,
         }
     ),

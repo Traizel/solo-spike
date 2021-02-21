@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
   const category = req.body.id;
   console.log(category);
   console.log('Getting Threads..');
-  const query = `SELECT * FROM "forum_threads"
+  const query = `SELECT * FROM "forum_thread"
                     WHERE category_id = $1`;
   pool
     .query(query, [category])
