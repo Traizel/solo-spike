@@ -5,13 +5,13 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   // return all categories
-  const category = req.body.id;
-  console.log(category);
-  console.log('Getting Threads..');
-  const query = `SELECT * FROM "forum_threads"
-                    WHERE category_id = $1`;
+  const comments = req.body.id;
+  console.log(comments);
+  console.log('Getting Comments..');
+  const query = `SELECT * FROM "forum_comments"
+                    WHERE post_id = $1`;
   pool
-    .query(query, [category])
+    .query(query, [comments])
     .then((result) => {
       console.log(result.rows);
       res.send(result.rows);

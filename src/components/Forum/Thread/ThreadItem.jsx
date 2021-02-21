@@ -14,8 +14,8 @@ function ForumThreadsItem({ thread }) {
     }, [])
 
     const toPost = () => {
-        dispatch({ type: 'SET_CURRENT_POSTS', payload: thread.id })
-        history.push('./posts')
+        dispatch({ type: 'SET_CURRENT_THREAD', payload: thread.id })
+        history.push('./post')
     }
 
     return (

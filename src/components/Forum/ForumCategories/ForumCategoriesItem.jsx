@@ -10,7 +10,6 @@ function ForumCategoriesItem({ category }) {
     const history = useHistory()
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_CATEGORIES' });
         dispatch({ type: 'FETCH_USERS' })
     }, [])
 

@@ -29,10 +29,31 @@ function* fetchUsers() {
 
 function* fetchThreads(action) {
     try {
-        const threadsResponse = yield axios.get('/api/threads', action.payload);
+        console.log(action.payload);
+        const threadsResponse = yield axios.post('/api/threads', {id: action.payload});
         yield put({ type: 'SET_THREADS', payload: threadsResponse.data});
     } catch (error) {
         console.log(`Error fetching threads`, error);
+    }
+}
+
+function* fetchPosts(action) {
+    try {
+        console.log(action.payload);
+        const postsResponse = yield axios.post('/api/posts', {id: action.payload});
+        yield put({ type: 'SET_POSTS', payload: postsResponse.data});
+    } catch (error) {
+        console.log(`Error fetching posts`, error);
+    }
+}
+
+function* fetchComments(action) {
+    try {
+        console.log(action.payload);
+        const commentsResponse = yield axios.post('/api/comments', {id: action.payload});
+        yield put({ type: 'SET_COMMENTS', payload: commentsResponse.data});
+    } catch (error) {
+        console.log(`Error fetching comments`, error);
     }
 }
 
@@ -43,6 +64,8 @@ function* rootSaga() {
     yield takeEvery('FETCH_CATEGORIES', fetchForumCategories);
     yield takeEvery('FETCH_USERS', fetchUsers);
     yield takeEvery('FETCH_THREADS', fetchThreads);
+    yield takeEvery('FETCH_POSTS', fetchPosts);
+    yield takeEvery('FETCH_COMMENTS', fetchComments);
 }
 
 const ForumCategoriesReducer = (state = [], action) => {
@@ -66,8 +89,36 @@ const GetUsersReducer = (state = [], action) => {
     return state;
 };
 
+const ForumPostsReducer = (state = [], action) => {
+   if (action.type === 'SET_POSTS') {
+        return action.payload;
+    }
+    return state;
+};
+
+const ForumCommentsReducer = (state = [], action) => {
+   if (action.type === 'SET_COMMENTS') {
+        return action.payload;
+    }
+    return state;
+};
+
 const CurrentCategoryReducer = (state = 0, action) => {
    if (action.type === 'SET_CURRENT_CATEGORY') {
+        return action.payload;
+    }
+    return state;
+};
+
+const CurrentThreadReducer = (state = 0, action) => {
+   if (action.type === 'SET_CURRENT_THREAD') {
+        return action.payload;
+    }
+    return state;
+};
+
+const CurrentPostReducer = (state = 0, action) => {
+   if (action.type === 'SET_CURRENT_POST') {
         return action.payload;
     }
     return state;
@@ -80,6 +131,10 @@ const storeInstance = createStore(
             GetUsersReducer,
             CurrentCategoryReducer,
             ForumThreadsReducer,
+            CurrentThreadReducer,
+            ForumPostsReducer,
+            CurrentPostReducer,
+            ForumCommentsReducer,
         }
     ),
     // Tell redux that we want to use our new logger
