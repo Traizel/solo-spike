@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 
-function ForumCategoriesItem({ category }) {
+function ForumThreadsItem({ thread }) {
 
     const users = useSelector(store => store.GetUsersReducer)
     console.log(users);
@@ -10,21 +10,21 @@ function ForumCategoriesItem({ category }) {
     const history = useHistory()
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_CATEGORIES' });
         dispatch({ type: 'FETCH_USERS' })
     }, [])
 
-    const toThread = () => {
-        dispatch({ type: 'SET_CURRENT_CATEGORY', payload: category.id })
-        history.push('./thread')
+    const toPost = () => {
+        dispatch({ type: 'SET_CURRENT_POSTS', payload: thread.id })
+        history.push('./posts')
     }
 
     return (
-        <div onClick={toThread}>
-            <h2>{category.title}</h2>
-            <p>{category.description}</p>
+        <div onClick={toPost}>
+            <h2>{thread.title}</h2>
+            <p>{thread.description}</p>
+            <p>Created: {thread.timestamp}</p>
         </div>
     );
 }
 
-export default ForumCategoriesItem;
+export default ForumThreadsItem;

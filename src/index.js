@@ -27,16 +27,33 @@ function* fetchUsers() {
     }
 }
 
+function* fetchThreads(action) {
+    try {
+        const threadsResponse = yield axios.get('/api/threads', action.payload);
+        yield put({ type: 'SET_THREADS', payload: threadsResponse.data});
+    } catch (error) {
+        console.log(`Error fetching threads`, error);
+    }
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
     yield takeEvery('FETCH_CATEGORIES', fetchForumCategories);
     yield takeEvery('FETCH_USERS', fetchUsers);
+    yield takeEvery('FETCH_THREADS', fetchThreads);
 }
 
 const ForumCategoriesReducer = (state = [], action) => {
    if (action.type === 'SET_CATEGORIES') {
+        return action.payload;
+    }
+    return state;
+};
+
+const ForumThreadsReducer = (state = [], action) => {
+   if (action.type === 'SET_THREADS') {
         return action.payload;
     }
     return state;
@@ -49,11 +66,20 @@ const GetUsersReducer = (state = [], action) => {
     return state;
 };
 
+const CurrentCategoryReducer = (state = 0, action) => {
+   if (action.type === 'SET_CURRENT_CATEGORY') {
+        return action.payload;
+    }
+    return state;
+};
+
 const storeInstance = createStore(
     combineReducers(
         {
             ForumCategoriesReducer,
             GetUsersReducer,
+            CurrentCategoryReducer,
+            ForumThreadsReducer,
         }
     ),
     // Tell redux that we want to use our new logger

@@ -1,5 +1,6 @@
 import React from 'react';
 import Forum from '../Forum/ForumCategories/ForumCategories';
+import Thread from '../Forum/Thread/Thread';
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <hr />
 
           <Route path="/forum" component={Forum} />
+          <Route path="/thread" component={Thread} />
         </div>
       </Router>
     </div>
