@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 5000;
 const forumRouter = require('./routes/forumRouter');
 const userRouter = require('./routes/userRouter');
 const threadRouter = require('./routes/threadRouter');
-const postRouter = require('./routes/postRouter');
 const commentsRouter = require('./routes/commentsRouter');
 
 // Body parser middleware
@@ -24,7 +23,6 @@ app.use(express.static('build'));
 app.use('/api/forum', forumRouter);
 app.use('/api/users', userRouter);
 app.use('/api/threads', threadRouter);
-app.use('/api/posts', postRouter);
 app.use('/api/comments', commentsRouter);
 
 // Listen
